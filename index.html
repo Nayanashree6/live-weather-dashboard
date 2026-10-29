@@ -1,0 +1,206 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="container">
+        <h1>🌦️ Weather Dashboard</h1>
+        <p class="subtitle">Check the weather anywhere in the world</p>
+
+        <form id="searchForm">
+            <input
+                type="text"
+                id="cityInput"
+                placeholder="Enter city name (e.g. Bengaluru)"
+                aria-label="City name"
+                required
+            >
+            <button type="submit">Search</button>
+        </form>
+
+        <p id="message" role="status" aria-live="polite"></p>
+
+        <section id="currentWeather" class="weather-card" hidden>
+            <h2 id="cityName"></h2>
+            <img id="weatherIcon" alt="Weather icon">
+            <h3 id="temperature"></h3>
+            <p id="description"></p>
+
+            <div class="details">
+                <p>Feels like: <span id="feelsLike"></span></p>
+                <p>Humidity: <span id="humidity"></span></p>
+                <p>Wind: <span id="wind"></span></p>
+            </div>
+        </section>
+
+        <section id="forecastSection" hidden>
+            <h2>5-Day Forecast</h2>
+            <div id="forecast" class="forecast-grid"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+```css
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+    color: #1e293b;
+    min-height: 100vh;
+    padding: 30px 15px;
+}
+
+.container {
+    max-width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: clamp(28px, 5vw, 40px);
+}
+
+.subtitle {
+    color: #475569;
+    margin-bottom: 30px;
+}
+
+#searchForm {
+    display: flex;
+    gap: 10px;
+    max-width: 550px;
+    margin: 0 auto 15px;
+}
+
+#cityInput {
+    flex: 1;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    padding: 14px 22px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+#message {
+    min-height: 24px;
+    color: #b91c1c;
+}
+
+.weather-card {
+    margin: 25px auto;
+    padding: 25px;
+    max-width: 550px;
+    border-radius: 18px;
+    background: white;
+    box-shadow: 0 8px 25px #00000012;
+}
+
+#weatherIcon {
+    width: 100px;
+    height: 100px;
+}
+
+#temperature {
+    font-size: 40px;
+    margin: 5px;
+}
+
+#description {
+    text-transform: capitalize;
+    color: #64748b;
+}
+
+.details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#forecastSection {
+    margin-top: 35px;
+}
+
+.forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.forecast-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px 8px;
+    box-shadow: 0 5px 15px #0000000a;
+    transition: transform 0.3s;
+}
+
+.forecast-card:hover {
+    transform: translateY(-5px);
+}
+
+.forecast-card img {
+    width: 60px;
+    max-width: 100%;
+}
+
+.forecast-card p {
+    font-size: 14px;
+}
+
+.forecast-temp {
+    font-weight: bold;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 650px) {
+    .forecast-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #searchForm {
+        flex-direction: column;
+    }
+
+    #searchForm button {
+        width: 100%;
+    }
+}
